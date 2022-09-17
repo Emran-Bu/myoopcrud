@@ -26,9 +26,15 @@
 
     // delete data
 
-    $delete_arr = array('sid' => 23);
+    // $delete_arr = array('sid' => 23);
 
-    $result = $obj->deleteData('student', $delete_arr);
+    // $result = $obj->deleteData('student', $delete_arr);
+
+    // delete data
+
+    $update_arr = array('sname' => 'xyz', 'saddress' => 'america', 'sclass' => 2);
+
+    $result = $obj->updateData('student', $update_arr, 'sid', 14);
 
     echo '<pre>';
     print_r($result);

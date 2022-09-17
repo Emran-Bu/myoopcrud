@@ -1,7 +1,5 @@
 <?php
 
-use LDAP\Result;
-
     class database{
         private $hostname;
         private $dbusername;
@@ -126,6 +124,46 @@ use LDAP\Result;
                     return 'Record Deleted successfully';
                 } else{
                     return 'Record not Deleted';
+                }
+
+            }
+            
+        }
+
+        // delete data
+        public function updateData($table ,$condition_arr='', $where_field, $where_value){
+            if ($condition_arr !='') {
+                $sql = "UPDATE $table SET";
+
+                // 1st rule
+
+                // $key = implode(',',array_keys($condition_arr));
+                // $value = implode("', '" ,$condition_arr);
+                // $sql .= " $key = $value";
+
+                // 2nd rule
+
+                $total_arr = count($condition_arr);
+                $i = 1;
+                foreach($condition_arr as $key=>$value){
+                    if($i == $total_arr){
+                        $sql .= " $key = '$value'";
+                    } else {
+                        $sql .= " $key = '$value' , ";
+                    }
+                    $i++;
+                }
+
+                $sql .= " WHERE $where_field = $where_value";
+                echo $sql;
+                // die();
+                
+                $result = $this->dbconnect()->query($sql);
+
+                if($result){
+                    return 'Record Updated successfully';
+                } else{
+                    return 'Record not updated';
                 }
 
             }
