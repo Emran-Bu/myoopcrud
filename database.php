@@ -58,35 +58,36 @@
         }
 
         // insert data
-        public function insertData($table, $update_arr = ''){
-            if($update_arr != ''){
+        public function insertData($table, $insert_arr = ''){
+            if($insert_arr != ''){
                 // first rule
-                $key = implode(', ',array_keys($update_arr));
-                $value = implode("', '" ,$update_arr);
+                $key = implode(', ',array_keys($insert_arr));
+                $value = implode("', '" ,$insert_arr);
                 $value = "'" .$value . "'"; 
 
                 // 2nd rule
 
-                // foreach($update_arr as $key => $value){
+                // foreach($insert_arr as $key => $value){
                 //     $key_arr[] = $key;
                 //     $value_arr[] = $value;
                 // }
 
                 // $o_key = implode(',',$key_arr);
-                // $o_value = implode("', '" ,$update_arr);
+                // $o_value = implode("', '" ,$insert_arr);
                 // $o_value = "'" .$o_value . "'"; 
                 // die($o_value);
 
                 $sql = "INSERT INTO $table ($key) VALUES ($value)";
-
-                // die($sql);
+                // die( $sql);
 
                 $result = $this->dbconnect()->query($sql);
 
+                session_start();
+                
                 if($result){
-                    return 'Record saved successfully';
+                    return $_SESSION['add_record'] = '<i class="fw-bold fs-5">Record saved successfully</i>';
                 } else{
-                    return 'Record not  saved';
+                    return $_SESSION['add_record'] ='<i class="fw-bold fs-5">Record not saved</i>';
                 }
 
             }
@@ -120,12 +121,13 @@
                 
                 $result = $this->dbconnect()->query($sql);
 
+                session_start();
+                
                 if($result){
-                    return 'Record Deleted successfully';
+                    return $_SESSION['delete_record'] = '<i class="fw-bold fs-5">Record Deleted successfully</i>';
                 } else{
-                    return 'Record not Deleted';
+                    return $_SESSION['delete_record'] ='<i class="fw-bold fs-5">Record not Deleted</i>';
                 }
-
             }
             
         }
@@ -155,19 +157,27 @@
                 }
 
                 $sql .= " WHERE $where_field = $where_value";
-                echo $sql;
+                // echo $sql;
                 // die();
                 
                 $result = $this->dbconnect()->query($sql);
 
+                session_start();
                 if($result){
-                    return 'Record Updated successfully';
+                    return $_SESSION['update_record'] = '<i class="fw-bold fs-5">Record Updated successfully</i>';
                 } else{
-                    return 'Record not updated';
+                    return $_SESSION['update_record'] ='<i class="fw-bold fs-5">Record not updated</i>';
                 }
 
             }
             
+        }
+
+        // safe string
+        public function get_safe_string($str)
+        {
+            if($str != '')
+            return mysqli_real_escape_string($this->dbconnect(), $str);
         }
     }
 

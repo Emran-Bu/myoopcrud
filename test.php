@@ -32,12 +32,12 @@
 
     // delete data
 
-    $update_arr = array('sname' => 'xyz', 'saddress' => 'america', 'sclass' => 2);
+    // $update_arr = array('sname' => 'xyz', 'saddress' => 'america', 'sclass' => 2);
 
-    $result = $obj->updateData('student', $update_arr, 'sid', 14);
+    // $result = $obj->updateData('student', $update_arr, 'sid', 14);
 
-    echo '<pre>';
-    print_r($result);
-    echo '</pre>';
+    // echo '<pre>';
+    // print_r($result);
+    // echo '</pre>';
 
 ?>
